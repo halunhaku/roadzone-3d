@@ -38,23 +38,23 @@ function FitOrbit({
   useEffect(() => {
     const applyDefault = () => {
       const span = Math.max(80, roadZ1 - roadZ0)
-      const midZ = (roadZ0 + roadZ1) / 2
       const side = eyeX === 0 ? -1 : Math.sign(eyeX)
       const aspect = (camera as THREE.PerspectiveCamera).aspect || 1.2
       const aspectComp = Math.max(0.45, Math.min(1.6, aspect))
 
-      // 默认全景：从侧前方高空斜俯瞰，使整条千米公路从起点（警告区）到终点（终止区）完整端正地居中呈现在视口中
-      const distTarget = Math.max(950, (span * 1.52) / Math.sqrt(aspectComp))
+      // 默认全景：视距拉开，确保起点 1600m 标牌与末端终止区标牌全部 100% 收录在视口内
+      const distTarget = Math.max(1250, (span * 2.15) / Math.sqrt(aspectComp))
+      const targetZ = roadZ0 + span * 0.44
       camera.position.set(
         side * (distTarget * 0.58),
-        distTarget * 0.62,
-        midZ - distTarget * 0.52,
+        distTarget * 0.64,
+        targetZ - distTarget * 0.52,
       )
       camera.near = 8
-      camera.far = Math.max(3500, span * 8)
+      camera.far = Math.max(4500, span * 10)
       camera.updateProjectionMatrix()
       if (!controls) return
-      controls.target.set(0, 6, midZ)
+      controls.target.set(0, 6, targetZ)
       controls.update()
       const dist = camera.position.distanceTo(controls.target)
       const polar = controls.getPolarAngle()
