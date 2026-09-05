@@ -133,16 +133,13 @@ function SignPost({
         }}
       >
         <planeGeometry args={[w, h]} />
-        <meshStandardMaterial
+        <meshBasicMaterial
           map={map}
           transparent
           alphaTest={0.2}
           depthWrite={true}
-          roughness={0.35}
-          metalness={0.05}
           side={THREE.DoubleSide}
-          emissive={selected ? '#e85d04' : '#000000'}
-          emissiveIntensity={selected ? 0.35 : 0}
+          color={selected ? '#ffe4cc' : '#ffffff'}
         />
       </mesh>
       {selected ? (
