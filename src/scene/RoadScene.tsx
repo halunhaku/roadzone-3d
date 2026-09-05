@@ -40,32 +40,30 @@ function FitOrbit({
       const span = Math.max(80, roadZ1 - roadZ0)
       const midZ = (roadZ0 + roadZ1) / 2
       const side = eyeX === 0 ? -1 : Math.sign(eyeX)
-      const aspect = (camera as THREE.PerspectiveCamera).aspect || 1
-      if (aspect < 1) {
-        const aspectComp = Math.max(0.4, aspect)
-        camera.position.set(
-          side * (Math.abs(eyeX) + (span * 0.18) / aspectComp),
-          Math.max(120, (span * 0.42) / Math.sqrt(aspectComp)),
-          roadZ0 - (span * 0.24) / aspectComp,
-        )
-      } else {
-        camera.position.set(side * (Math.abs(eyeX) + span * 0.15), Math.max(110, span * 0.38), roadZ0 - span * 0.18)
-      }
+      const aspect = (camera as THREE.PerspectiveCamera).aspect || 1.2
+      const aspectComp = Math.max(0.45, Math.min(1.6, aspect))
+
+      // 默认全景：从侧前方高空斜俯瞰，使整条千米公路从起点（警告区）到终点（终止区）完整端正地居中呈现在视口中
+      const distTarget = Math.max(950, (span * 1.52) / Math.sqrt(aspectComp))
+      camera.position.set(
+        side * (distTarget * 0.58),
+        distTarget * 0.62,
+        midZ - distTarget * 0.52,
+      )
       camera.near = 8
-      camera.far = Math.max(3000, span * 6)
+      camera.far = Math.max(3500, span * 8)
       camera.updateProjectionMatrix()
       if (!controls) return
-      controls.target.set(lookX - side * span * 0.05, 6, midZ)
+      controls.target.set(0, 6, midZ)
       controls.update()
       const dist = camera.position.distanceTo(controls.target)
       const polar = controls.getPolarAngle()
-      const azim = controls.getAzimuthalAngle()
-      controls.minDistance = dist * 0.48
-      controls.maxDistance = dist * 1.9
-      controls.minPolarAngle = Math.max(0.22, polar - 0.4)
-      controls.maxPolarAngle = Math.min(Math.PI / 2 - 0.12, polar + 0.32)
-      controls.minAzimuthAngle = azim - 0.95
-      controls.maxAzimuthAngle = azim + 0.95
+      controls.minDistance = dist * 0.25
+      controls.maxDistance = dist * 2.5
+      controls.minPolarAngle = Math.max(0.15, polar - 0.55)
+      controls.maxPolarAngle = Math.min(Math.PI / 2 - 0.08, polar + 0.38)
+      controls.minAzimuthAngle = -Infinity
+      controls.maxAzimuthAngle = Infinity
       controls.enablePan = false
       controls.update()
     }
