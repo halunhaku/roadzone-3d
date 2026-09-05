@@ -32,7 +32,7 @@ export function PlanPanel({
           </svg>
           <span className="fold-tab-title">布置图</span>
           <svg className="fold-tab-arrow" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M6 3.5l4.5 4.5L6 12.5" />
+            <path d="M10 3.5L5.5 8l4.5 4.5" />
           </svg>
         </button>
       ) : (
@@ -44,7 +44,7 @@ export function PlanPanel({
           onClick={onToggleFold}
         >
           <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M10 3.5L5.5 8l4.5 4.5" />
+            <path d="M6 3.5l4.5 4.5L6 12.5" />
           </svg>
           <span>收起</span>
         </button>
