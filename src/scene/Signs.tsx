@@ -129,35 +129,26 @@ function SignPost({
           e.nativeEvent.stopImmediatePropagation()
           onSelect(spot)
         }}
-      >
-        <planeGeometry args={[w, h]} />
-        <meshStandardMaterial
-          map={map}
-          transparent
-          alphaTest={0.12}
-          roughness={0.35}
-          metalness={0.05}
-          side={THREE.DoubleSide}
-          emissive={selected ? '#e85d04' : '#000000'}
-          emissiveIntensity={selected ? 0.35 : 0}
-        />
-      </mesh>
-      <mesh
-        position={[0, boardY, 0.12]}
-        onPointerDown={(e) => {
+        onPointerOver={(e) => {
           e.stopPropagation()
-          e.nativeEvent.stopImmediatePropagation()
-          onSelect(spot)
-        }}
-        onPointerOver={() => {
           document.body.style.cursor = 'pointer'
         }}
         onPointerOut={() => {
           document.body.style.cursor = 'auto'
         }}
       >
-        <planeGeometry args={[w + (schematic ? 2 : 0.3), h + (schematic ? 2 : 0.3)]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.001} depthWrite={false} side={THREE.DoubleSide} />
+        <planeGeometry args={[w, h]} />
+        <meshStandardMaterial
+          map={map}
+          transparent
+          alphaTest={0.5}
+          depthWrite={true}
+          roughness={0.35}
+          metalness={0.05}
+          side={THREE.DoubleSide}
+          emissive={selected ? '#e85d04' : '#000000'}
+          emissiveIntensity={selected ? 0.35 : 0}
+        />
       </mesh>
       {selected ? (
         <mesh position={[0, 0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>

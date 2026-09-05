@@ -36,17 +36,16 @@ function SedanMesh({ color }: { color: string }) {
         <boxGeometry args={[1.72, 0.44, 4.3]} />
         <meshStandardMaterial color={color} roughness={0.38} metalness={0.22} />
       </mesh>
-      {/* 乘员舱顶棚 */}
-      <mesh position={[0, 0.88, -0.22]} castShadow>
-        <boxGeometry args={[1.52, 0.5, 2.1]} />
+      {/* 深色车窗乘员舱核心 (实体深色，彻底根除透明排序与面重叠冲突) */}
+      <mesh position={[0, 0.86, -0.2]} castShadow>
+        <boxGeometry args={[1.5, 0.46, 2.14]} />
+        <meshStandardMaterial color="#0f172a" roughness={0.15} metalness={0.5} />
+      </mesh>
+      {/* 乘员舱同色车顶盖板 */}
+      <mesh position={[0, 1.1, -0.22]} castShadow>
+        <boxGeometry args={[1.46, 0.06, 1.85]} />
         <meshStandardMaterial color={color} roughness={0.35} metalness={0.2} />
       </mesh>
-      {/* 前后侧车窗一体玻璃 */}
-      <mesh position={[0, 0.89, -0.2]}>
-        <boxGeometry args={[1.54, 0.46, 2.16]} />
-        <meshStandardMaterial color="#0f172a" roughness={0.12} metalness={0.5} transparent opacity={0.88} />
-      </mesh>
-
       {/* 前大灯 (高亮白光) */}
       <mesh position={[0.62, 0.45, 2.14]}>
         <boxGeometry args={[0.26, 0.12, 0.06]} />
@@ -85,17 +84,16 @@ function SuvMesh({ color }: { color: string }) {
         <boxGeometry args={[1.82, 0.54, 4.4]} />
         <meshStandardMaterial color={color} roughness={0.36} metalness={0.24} />
       </mesh>
-      {/* 高顶乘员舱 */}
-      <mesh position={[0, 1.05, -0.15]} castShadow>
-        <boxGeometry args={[1.64, 0.62, 2.6]} />
-        <meshStandardMaterial color={color} roughness={0.35} metalness={0.22} />
+      {/* 深色车窗乘员舱 (实体深色，消除双层重叠) */}
+      <mesh position={[0, 1.02, -0.15]} castShadow>
+        <boxGeometry args={[1.62, 0.56, 2.62]} />
+        <meshStandardMaterial color="#0f172a" roughness={0.15} metalness={0.5} />
       </mesh>
-      {/* 深色车窗玻璃 */}
-      <mesh position={[0, 1.06, -0.15]}>
-        <boxGeometry args={[1.66, 0.56, 2.66]} />
-        <meshStandardMaterial color="#0f172a" roughness={0.15} metalness={0.5} transparent opacity={0.9} />
+      {/* 车顶盖板 */}
+      <mesh position={[0, 1.31, -0.15]} castShadow>
+        <boxGeometry args={[1.58, 0.06, 2.4]} />
+        <meshStandardMaterial color={color} roughness={0.35} metalness={0.2} />
       </mesh>
-
       {/* 车顶银色行李架导轨 */}
       <mesh position={[0.7, 1.4, -0.15]}>
         <boxGeometry args={[0.06, 0.06, 2.1]} />
@@ -321,7 +319,7 @@ export function Traffic({ layout, params }: { layout: RoadLayout; params: Params
           speed={speed}
           zMin={zMin}
           zMax={zMax}
-          y={layout.cs.ROAD_Y}
+          y={layout.cs.ROAD_Y + 0.04}
           s={layout.cs.kind === 'diagram' ? 3.0 : 1.0}
         />
       ))}

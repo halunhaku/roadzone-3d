@@ -9,16 +9,15 @@ export function ClosedLanes({ lanes, y = 0.04 }: { lanes: ClosedLane[]; y?: numb
         return (
           <mesh
             key={i}
-            position={[(lane.x0 + lane.x1) / 2, y + 0.08, (lane.z0 + lane.z1) / 2]}
-            rotation={[-Math.PI / 2, 0, 0]}
+            position={[(lane.x0 + lane.x1) / 2, y + 0.03, (lane.z0 + lane.z1) / 2]}
           >
-            <planeGeometry args={[w, d]} />
+            <boxGeometry args={[w, 0.06, d]} />
             <meshStandardMaterial
               color={lane.color}
               transparent
-              opacity={lane.color === '#FF3B30' ? 0.22 : 0.16}
-              roughness={1}
-              depthWrite={false}
+              opacity={lane.color === '#FF3B30' ? 0.35 : 0.25}
+              roughness={0.8}
+              depthWrite={true}
             />
           </mesh>
         )
