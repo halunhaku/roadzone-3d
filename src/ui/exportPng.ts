@@ -59,14 +59,14 @@ export async function overlayUiOnScene(sceneBlob: Blob, app: HTMLElement, _scene
   const ctx = out.getContext('2d')
   if (!ctx) throw new Error('截图失败')
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-  ctx.fillStyle = '#1c1b19'
+  ctx.fillStyle = '#f0ede5'
   ctx.fillRect(0, 0, w, h)
 
   const sceneUrl = URL.createObjectURL(sceneBlob)
   app.classList.add('capture-flat')
   try {
     ctx.drawImage(await loadImg(sceneUrl), 0, 0, w, h)
-    const nodes = ['.panel', '.viewbar', '.legend', '.sign-card', '.hint-bar']
+    const nodes = ['.panel-sidebar', '.viewbar', '.legend-box', '.sign-card', '.hint-bar']
       .map((sel) => app.querySelector(sel))
       .filter((el): el is HTMLElement => el instanceof HTMLElement)
     for (const el of nodes) {
@@ -77,7 +77,7 @@ export async function overlayUiOnScene(sceneBlob: Blob, app: HTMLElement, _scene
         backdrop: el.style.backdropFilter,
         transform: el.style.transform,
       }
-      el.style.background = 'rgba(28, 26, 23, 0.94)'
+      el.style.background = 'rgba(250, 248, 242, 0.96)'
       el.style.backdropFilter = 'none'
       el.style.setProperty('-webkit-backdrop-filter', 'none')
       try {
@@ -95,7 +95,7 @@ export async function overlayUiOnScene(sceneBlob: Blob, app: HTMLElement, _scene
             bottom: 'auto',
             position: 'relative',
             margin: '0',
-            background: 'rgba(28, 26, 23, 0.94)',
+            background: 'rgba(250, 248, 242, 0.96)',
             backdropFilter: 'none',
           },
           onImageErrorHandler: () => undefined,
