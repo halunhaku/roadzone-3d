@@ -61,9 +61,13 @@ export default function App() {
         if (!host) return
         const pages = await exportPlanA4(host, params, layout.zones)
         const tag = work ? stake(work.start) : 'zone'
-        saveBlob(pages.diagram, pngFilename(`A4-布置图-${tag}`))
+        const dual = pages.diagrams.length > 1
+        pages.diagrams.forEach((blob, i) => {
+          const label = dual ? `A4-布置图-${i === 0 ? '上行' : '下行'}-${tag}` : `A4-布置图-${tag}`
+          saveBlob(blob, pngFilename(label))
+        })
         window.setTimeout(() => saveBlob(pages.table, pngFilename(`A4-一览表-${tag}`)), 400)
-        showToast('已导出 A4 布置图与设施一览表 (PNG)')
+        showToast(dual ? '已导出上/下行布置图与设施一览表 (3 张 PNG)' : '已导出 A4 布置图与设施一览表 (PNG)')
         return
       }
       const scene = await capture()

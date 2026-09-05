@@ -212,39 +212,25 @@ export async function exportPlanA4(
   host: HTMLElement,
   params: Params,
   zones: Zone[],
-): Promise<{ diagram: Blob; table: Blob }> {
+): Promise<{ diagrams: Blob[]; table: Blob }> {
   const svgs = [...host.querySelectorAll<SVGSVGElement>('svg.roadSvg')]
   if (svgs.length === 0) throw new Error('布置图未生成')
-  const diagrams: HTMLCanvasElement[] = []
+  const sheets: HTMLCanvasElement[] = []
   for (const svg of svgs) {
     const clone = svg.cloneNode(true) as SVGSVGElement
     clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
-    diagrams.push(await svgXmlToCanvas(new XMLSerializer().serializeToString(clone)))
-  }
-  let diagramSheet = diagrams[0]!
-  if (diagrams.length > 1) {
-    const gap = 24
-    const w = Math.max(...diagrams.map((p) => p.width))
-    const h = diagrams.reduce((s, p) => s + p.height, 0) + gap * (diagrams.length - 1)
-    const stacked = document.createElement('canvas')
-    stacked.width = w
-    stacked.height = h
-    const sctx = stacked.getContext('2d')
-    if (!sctx) throw new Error('截图失败')
-    sctx.fillStyle = '#ffffff'
-    sctx.fillRect(0, 0, w, h)
-    let y = 0
-    for (const piece of diagrams) {
-      sctx.drawImage(piece, (w - piece.width) / 2, y)
-      y += piece.height + gap
-    }
-    diagramSheet = stacked
+    sheets.push(await svgXmlToCanvas(new XMLSerializer().serializeToString(clone)))
   }
   const tableSheet = await svgXmlToCanvas(buildScheduleSvg(params, zones), 1100, 600, 2)
   const sub = planSubtitle(params, zones)
-  const pageCount = 2
-  return {
-    diagram: await canvasToPng(paintA4(diagramSheet, '高速公路作业区布置图', sub, 1, pageCount)),
-    table: await canvasToPng(paintA4(tableSheet, '高速公路作业区一览表', sub, 2, pageCount, 'top')),
+  const pageCount = sheets.length + 1
+  const labels = sheets.length > 1 ? ['（上行）', '（下行）'] : ['']
+  const diagrams: Blob[] = []
+  for (let i = 0; i < sheets.length; i++) {
+    diagrams.push(
+      await canvasToPng(paintA4(sheets[i]!, `高速公路作业区布置图${labels[i]}`, sub, i + 1, pageCount)),
+    )
   }
+  const table = await canvasToPng(paintA4(tableSheet, '高速公路作业区一览表', sub, pageCount, pageCount, 'top'))
+  return { diagrams, table }
 }
