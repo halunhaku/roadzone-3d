@@ -1,4 +1,4 @@
-import { OrbitControls, Sky } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
 import { useEffect, useLayoutEffect, type MutableRefObject } from 'react'
 import * as THREE from 'three'
@@ -44,12 +44,12 @@ function FitOrbit({
       if (aspect < 1) {
         const aspectComp = Math.max(0.4, aspect)
         camera.position.set(
-          side * (Math.abs(eyeX) + (span * 0.16) / aspectComp),
-          Math.max(110, (span * 0.36) / Math.sqrt(aspectComp)),
-          roadZ0 - (span * 0.22) / aspectComp,
+          side * (Math.abs(eyeX) + (span * 0.18) / aspectComp),
+          Math.max(120, (span * 0.42) / Math.sqrt(aspectComp)),
+          roadZ0 - (span * 0.24) / aspectComp,
         )
       } else {
-        camera.position.set(side * (Math.abs(eyeX) + span * 0.12), Math.max(96, span * 0.32), roadZ0 - span * 0.16)
+        camera.position.set(side * (Math.abs(eyeX) + span * 0.15), Math.max(110, span * 0.38), roadZ0 - span * 0.18)
       }
       camera.near = 1
       camera.far = Math.max(6000, span * 10)
@@ -101,25 +101,27 @@ function FitOrbit({
 }
 
 function Lights({ length }: { length: number }) {
-  const shadowSpan = Math.min(90, Math.max(40, length * 0.12))
+  const shadowSpanX = 220
+  const shadowSpanZ = Math.max(500, length * 0.75)
   return (
     <>
-      <hemisphereLight args={['#f3eee6', '#7a8470', 1.05]} />
+      <hemisphereLight args={['#ffffff', '#b2c6a9', 1.25]} />
       <directionalLight
         castShadow
-        position={[length * 0.25, 90, length * 0.15]}
-        intensity={2.05}
-        color="#fff3dc"
+        position={[length * 0.25, 110, length * 0.15]}
+        intensity={1.65}
+        color="#fffaf0"
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
         shadow-camera-near={1}
-        shadow-camera-far={Math.max(400, length * 2)}
-        shadow-camera-left={-shadowSpan}
-        shadow-camera-right={shadowSpan}
-        shadow-camera-top={shadowSpan}
-        shadow-camera-bottom={-shadowSpan}
+        shadow-camera-far={Math.max(500, length * 2.5)}
+        shadow-camera-left={-shadowSpanX}
+        shadow-camera-right={shadowSpanX}
+        shadow-camera-top={shadowSpanZ}
+        shadow-camera-bottom={-shadowSpanZ}
+        shadow-bias={-0.00015}
       />
-      <ambientLight intensity={0.48} />
+      <ambientLight intensity={0.65} color="#fbf9f4" />
     </>
   )
 }
@@ -162,29 +164,22 @@ export function RoadScene({
   captureRef?: MutableRefObject<CaptureFn | null>
   cameraRef?: MutableRefObject<CameraApi | null>
 }) {
-  const fogFar = Math.max(2500, layout.totalLength * 4)
-  const fogNear = 1400
+  const fogFar = Math.max(3000, layout.totalLength * 4.8)
+  const fogNear = 1600
+  const bg = '#eae6dd'
 
   return (
     <Canvas
       shadows
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
-      camera={{ fov: 42, near: 0.5, far: 5000, position: [120, 90, 160] }}
+      camera={{ fov: 32, near: 1, far: 8000, position: [130, 105, 170] }}
       onPointerMissed={onMiss}
       onCreated={({ gl }) => {
-        gl.setClearColor('#d7dde0')
+        gl.setClearColor(bg)
       }}
     >
-      <fog attach="fog" args={['#d4d8d6', fogNear, fogFar]} />
-      <Sky
-        distance={450000}
-        sunPosition={[70, 38, 35]}
-        turbidity={3.8}
-        rayleigh={0.7}
-        mieCoefficient={0.003}
-        mieDirectionalG={0.78}
-      />
+      <fog attach="fog" args={[bg, fogNear, fogFar]} />
       <CaptureBridge captureRef={captureRef} />
       <Lights length={layout.totalLength} />
       <Roadway

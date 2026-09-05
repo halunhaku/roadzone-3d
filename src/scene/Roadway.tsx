@@ -1,5 +1,3 @@
-import { useLayoutEffect, useMemo } from 'react'
-import * as THREE from 'three'
 import type { RoadLayout } from '../layout/buildLayout'
 import type { CrossSection } from '../layout/crossSection'
 import type { DeviceLayout, SignSpot } from '../layout/devices'
@@ -9,12 +7,7 @@ import { Cones } from './Cones'
 import { LaneMarks, useLaneMarkingGeometry } from './markings'
 import { Signs } from './Signs'
 import { Traffic } from './Traffic'
-import { useRoadTextures } from './textures'
 import { WorkVehicles } from './WorkVehicles'
-
-function asphaltRepeat(length: number, width: number) {
-  return new THREE.Vector2(width / 8, Math.max(8, length / 8))
-}
 
 export function Roadway({
   layout,
@@ -29,17 +22,9 @@ export function Roadway({
   selectedId: string | null
   onSelectSign: (spot: SignSpot) => void
 }) {
-  const { asphalt, grass } = useRoadTextures()
   const { cs } = layout
   const length = layout.totalLength
   const roadMid = (layout.roadZ0 + layout.roadZ1) / 2
-  const asphaltRepeatVec = useMemo(() => asphaltRepeat(length, cs.ROAD_WIDTH), [cs.ROAD_WIDTH, length])
-
-  useLayoutEffect(() => {
-    asphalt.repeat.copy(asphaltRepeatVec)
-    asphalt.needsUpdate = true
-  }, [asphalt, asphaltRepeatVec])
-
   const upMarks = useLaneMarkingGeometry(layout, {
     outer: cs.UP.edgeOuter,
     split: cs.UP.laneSplit,
@@ -79,34 +64,34 @@ export function Roadway({
 
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]} receiveShadow>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]}>
         <planeGeometry args={[40000, 40000]} />
-        <meshStandardMaterial map={grass} color="#8f9a7c" roughness={1} />
+        <meshStandardMaterial color="#a8be9e" roughness={1} metalness={0} />
       </mesh>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, cs.ROAD_Y, roadMid]} receiveShadow>
         <planeGeometry args={[cs.ROAD_WIDTH, length]} />
-        <meshStandardMaterial map={asphalt} color="#8a8984" roughness={0.94} metalness={0.02} />
+        <meshStandardMaterial color="#2f2d2b" roughness={0.96} metalness={0.04} />
       </mesh>
 
       <mesh position={[0, cs.ROAD_Y + 0.005, roadMid]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[cs.MEDIAN, length]} />
-        <meshStandardMaterial color="#7d866c" roughness={1} />
+        <meshStandardMaterial color="#7c876e" roughness={1} />
       </mesh>
 
       <mesh position={[0, cs.BARRIER_H / 2, roadMid]} castShadow receiveShadow>
         <boxGeometry args={[cs.BARRIER_W, cs.BARRIER_H, length]} />
-        <meshStandardMaterial color="#c5c1b7" roughness={0.82} />
+        <meshStandardMaterial color="#dedbd2" roughness={0.65} metalness={0.15} />
       </mesh>
       <mesh position={[0, cs.BARRIER_H + cs.BARRIER_W * 0.08, roadMid]}>
         <boxGeometry args={[cs.BARRIER_W * 1.08, cs.BARRIER_W * 0.16, length]} />
-        <meshStandardMaterial color="#b7b3a8" roughness={0.7} />
+        <meshStandardMaterial color="#cfcbc2" roughness={0.6} metalness={0.12} />
       </mesh>
 
-      <LaneMarks geometry={upMarks.white} color="#f4f1ea" />
-      <LaneMarks geometry={upMarks.yellow} color="#e6c200" />
-      <LaneMarks geometry={downMarks.white} color="#f4f1ea" />
-      <LaneMarks geometry={downMarks.yellow} color="#e6c200" />
+      <LaneMarks geometry={upMarks.white} color="#ffffff" />
+      <LaneMarks geometry={upMarks.yellow} color="#f59e0b" />
+      <LaneMarks geometry={downMarks.white} color="#ffffff" />
+      <LaneMarks geometry={downMarks.yellow} color="#f59e0b" />
 
       {bands.map((band) => (
         <mesh
@@ -167,15 +152,15 @@ function Chevron({ x, z, yaw, y, s }: { x: number; z: number; yaw: number; y: nu
     <group position={[x, y + 0.03 * s, z]} rotation={[0, yaw, 0]} scale={s}>
       <mesh>
         <boxGeometry args={[0.28, 0.012, 3.2]} />
-        <meshStandardMaterial color="#ece8e0" roughness={0.35} emissive="#ece8e0" emissiveIntensity={0.08} />
+        <meshStandardMaterial color="#ffffff" roughness={0.25} emissive="#ffffff" emissiveIntensity={0.15} />
       </mesh>
       <mesh position={[0.42, 0, 0.95]} rotation={[0, 0.55, 0]}>
         <boxGeometry args={[0.24, 0.012, 1.5]} />
-        <meshStandardMaterial color="#ece8e0" roughness={0.35} emissive="#ece8e0" emissiveIntensity={0.08} />
+        <meshStandardMaterial color="#ffffff" roughness={0.25} emissive="#ffffff" emissiveIntensity={0.15} />
       </mesh>
       <mesh position={[-0.42, 0, 0.95]} rotation={[0, -0.55, 0]}>
         <boxGeometry args={[0.24, 0.012, 1.5]} />
-        <meshStandardMaterial color="#ece8e0" roughness={0.35} emissive="#ece8e0" emissiveIntensity={0.08} />
+        <meshStandardMaterial color="#ffffff" roughness={0.25} emissive="#ffffff" emissiveIntensity={0.15} />
       </mesh>
     </group>
   )

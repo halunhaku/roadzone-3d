@@ -56,10 +56,10 @@ export function Cones({ spots, size = 1, y = 0.04 }: { spots: ConeSpot[]; size?:
   return (
     <group>
       <instancedMesh ref={mesh} args={[geos.body, undefined, spots.length]} castShadow frustumCulled={false}>
-        <meshStandardMaterial color="#d2652a" roughness={0.55} emissive="#c45c22" emissiveIntensity={0.04} />
+        <meshStandardMaterial color="#ff661a" roughness={0.42} emissive="#ff5500" emissiveIntensity={0.08} />
       </instancedMesh>
       <instancedMesh ref={stripeMesh} args={[geos.stripe, undefined, spots.length]} frustumCulled={false}>
-        <meshStandardMaterial color="#f4f1ea" roughness={0.4} />
+        <meshStandardMaterial color="#ffffff" roughness={0.25} />
       </instancedMesh>
     </group>
   )

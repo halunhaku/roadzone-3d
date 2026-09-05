@@ -16,7 +16,7 @@ export function ClosedLanes({ lanes, y = 0.04 }: { lanes: ClosedLane[]; y?: numb
             <meshStandardMaterial
               color={lane.color}
               transparent
-              opacity={lane.color === '#FF3B30' ? 0.28 : 0.2}
+              opacity={lane.color === '#FF3B30' ? 0.22 : 0.16}
               roughness={1}
               depthWrite={false}
             />
