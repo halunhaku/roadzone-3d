@@ -51,8 +51,8 @@ function FitOrbit({
       } else {
         camera.position.set(side * (Math.abs(eyeX) + span * 0.15), Math.max(110, span * 0.38), roadZ0 - span * 0.18)
       }
-      camera.near = 1
-      camera.far = Math.max(6000, span * 10)
+      camera.near = 8
+      camera.far = Math.max(3000, span * 6)
       camera.updateProjectionMatrix()
       if (!controls) return
       controls.target.set(lookX - side * span * 0.05, 6, midZ)
@@ -113,13 +113,14 @@ function Lights({ length }: { length: number }) {
         color="#fffbf2"
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
-        shadow-camera-near={1}
+        shadow-camera-near={10}
         shadow-camera-far={Math.max(500, length * 2.5)}
         shadow-camera-left={-shadowSpanX}
         shadow-camera-right={shadowSpanX}
         shadow-camera-top={shadowSpanZ}
         shadow-camera-bottom={-shadowSpanZ}
-        shadow-bias={-0.00012}
+        shadow-bias={-0.0003}
+        shadow-normalBias={0.04}
       />
       <ambientLight intensity={0.42} color="#fffcf5" />
     </>
@@ -173,7 +174,7 @@ export function RoadScene({
       shadows
       dpr={[1, 2]}
       gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
-      camera={{ fov: 32, near: 1, far: 8000, position: [130, 105, 170] }}
+      camera={{ fov: 32, near: 8, far: 4000, position: [130, 105, 170] }}
       onPointerMissed={onMiss}
       onCreated={({ gl }) => {
         gl.setClearColor(bg)

@@ -117,14 +117,13 @@ function SignPost({
           <meshStandardMaterial color="#8c8275" roughness={0.45} metalness={0.3} />
         </mesh>
       )}
-      {/* 标牌实体背板 (位于牌面后方，提供真实厚度与背板质感) */}
-      <mesh position={[0, boardY, -(schematic ? 0.14 : 0.02)]} castShadow>
+      {/* 标牌实体背板 (示意图大标牌不向路面投射遮挡阴影) */}
+      <mesh position={[0, boardY, -(schematic ? 0.14 : 0.02)]}>
         <boxGeometry args={[w * 0.99, h * 0.99, schematic ? 0.22 : 0.025]} />
         <meshStandardMaterial color="#d4d0c7" roughness={0.55} metalness={0.15} />
       </mesh>
       <mesh
         position={[0, boardY, 0.06]}
-        castShadow
         onPointerDown={(e) => {
           e.stopPropagation()
           e.nativeEvent.stopImmediatePropagation()

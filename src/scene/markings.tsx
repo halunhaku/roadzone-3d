@@ -24,7 +24,7 @@ export function useLaneMarkingGeometry(layout: RoadLayout, xs: { outer: number; 
   return useMemo(() => {
     const z0 = layout.roadZ0
     const z1 = layout.roadZ1
-    const y = layout.cs.ROAD_Y
+    const y = layout.cs.ROAD_Y + 0.02
     const mark = layout.cs.MARK_W
     const h = layout.cs.kind === 'diagram' ? 0.45 : 0.018
     const dash = layout.cs.kind === 'diagram' ? 14 : 6
