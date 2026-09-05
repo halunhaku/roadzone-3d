@@ -212,7 +212,6 @@ export function RoadScene({
         dampingFactor={0.08}
         rotateSpeed={0.28}
         zoomSpeed={0.38}
-        target={[0, 0, 0]}
       />
       <FitOrbit
         roadZ0={layout.roadZ0}
