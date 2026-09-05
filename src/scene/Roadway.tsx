@@ -8,6 +8,7 @@ import { LaneMarks, useLaneMarkingGeometry } from './markings'
 import { Signs } from './Signs'
 import { Traffic } from './Traffic'
 import { WorkVehicles } from './WorkVehicles'
+import { Guardrails } from './Guardrails'
 
 export function Roadway({
   layout,
@@ -87,15 +88,8 @@ export function Roadway({
         <meshStandardMaterial color="#738668" roughness={0.95} />
       </mesh>
 
-      {/* 护栏稳固立于中央绿化岛之上 */}
-      <mesh position={[0, cs.ROAD_Y + 0.16 + cs.BARRIER_H / 2, roadMid]} castShadow receiveShadow>
-        <boxGeometry args={[cs.BARRIER_W, cs.BARRIER_H, length]} />
-        <meshStandardMaterial color="#ece9df" roughness={0.5} metalness={0.12} />
-      </mesh>
-      <mesh position={[0, cs.ROAD_Y + 0.16 + cs.BARRIER_H + cs.BARRIER_W * 0.08, roadMid]}>
-        <boxGeometry args={[cs.BARRIER_W * 1.08, cs.BARRIER_W * 0.16, length]} />
-        <meshStandardMaterial color="#dedad0" roughness={0.5} metalness={0.1} />
-      </mesh>
+      {/* 高速公路波形梁钢护栏 (路侧 + 中分带) 与中分带绿色防眩板系统 */}
+      <Guardrails cs={cs} length={length} roadMid={roadMid} />
 
       <LaneMarks geometry={upMarks.white} color="#fdfdfc" />
       <LaneMarks geometry={upMarks.yellow} color="#f5a623" />
