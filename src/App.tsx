@@ -79,6 +79,7 @@ export default function App() {
     } catch (err) {
       console.error('export png failed', err)
       showToast('导出图片失败，请重试')
+    } finally {
       exportingLock.current = false
       setExporting(false)
     }
