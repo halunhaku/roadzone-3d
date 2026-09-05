@@ -1,6 +1,6 @@
 import { OrbitControls } from '@react-three/drei'
 import { Canvas, useThree } from '@react-three/fiber'
-import { useEffect, useLayoutEffect, type MutableRefObject } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, type MutableRefObject } from 'react'
 import * as THREE from 'three'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { roadsideEyeX, roadsideLookX } from '../layout/cameraPath'
@@ -100,21 +100,38 @@ function FitOrbit({
   return null
 }
 
-function Lights({ length }: { length: number }) {
-  const shadowSpanX = 220
-  const shadowSpanZ = Math.max(500, length * 0.75)
+function Lights({ length, roadMid }: { length: number; roadMid: number }) {
+  const lightRef = useRef<THREE.DirectionalLight>(null)
+  const targetObj = useMemo(() => {
+    const obj = new THREE.Object3D()
+    obj.position.set(0, 0, roadMid)
+    return obj
+  }, [roadMid])
+
+  useLayoutEffect(() => {
+    if (lightRef.current) {
+      lightRef.current.target = targetObj
+      lightRef.current.target.updateMatrixWorld()
+    }
+  }, [targetObj])
+
+  const shadowSpanX = 240
+  const shadowSpanZ = length * 0.58 + 60
+
   return (
     <>
       <hemisphereLight args={['#ffffff', '#82957b', 0.92]} />
+      <primitive object={targetObj} />
       <directionalLight
+        ref={lightRef}
         castShadow
-        position={[length * 0.24, 115, length * 0.15]}
+        position={[140, 160, roadMid + length * 0.15]}
         intensity={1.85}
         color="#fffbf2"
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
         shadow-camera-near={10}
-        shadow-camera-far={Math.max(500, length * 2.5)}
+        shadow-camera-far={Math.max(600, length * 2.5)}
         shadow-camera-left={-shadowSpanX}
         shadow-camera-right={shadowSpanX}
         shadow-camera-top={shadowSpanZ}
@@ -182,7 +199,7 @@ export function RoadScene({
     >
       <fog attach="fog" args={[bg, fogNear, fogFar]} />
       <CaptureBridge captureRef={captureRef} />
-      <Lights length={layout.totalLength} />
+      <Lights length={layout.totalLength} roadMid={(layout.roadZ0 + layout.roadZ1) / 2} />
       <Roadway
         layout={layout}
         params={params}
