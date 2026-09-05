@@ -64,19 +64,21 @@ export function Roadway({
 
   return (
     <group>
-      {/* 3D 微缩沙盘立体地台 (台座顶面精确位于路面下方 0.01，绝不遮挡沥青路面与标线) */}
-      <group position={[0, cs.ROAD_Y, roadMid]}>
-        <mesh position={[0, -1.01, 0]}>
-          <boxGeometry args={[cs.ROAD_WIDTH + 36, 2.0, length + 48]} />
+      {/* 3D 微缩沙盘立体地台 (顶面精确位于 cs.ROAD_Y - 0.4，比路面低 0.4 个单位，彻底杜绝任何面重叠与深度冲突) */}
+      <group position={[0, cs.ROAD_Y - 1.2, roadMid]}>
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[cs.ROAD_WIDTH + 36, 1.6, length + 48]} />
           <meshStandardMaterial color="#d2dfce" roughness={1} metalness={0} />
         </mesh>
-        <mesh position={[0, -2.06, 0]} castShadow receiveShadow>
-          <boxGeometry args={[cs.ROAD_WIDTH + 38, 0.2, length + 50]} />
+        <mesh position={[0, -0.9, 0]} castShadow receiveShadow>
+          <boxGeometry args={[cs.ROAD_WIDTH + 38, 0.22, length + 50]} />
           <meshStandardMaterial color="#cfcbbe" roughness={0.7} metalness={0.12} />
         </mesh>
       </group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, cs.ROAD_Y, roadMid]} receiveShadow>
-        <planeGeometry args={[cs.ROAD_WIDTH, length]} />
+
+      {/* 沉稳深色沥青路面结构层 (带 0.4 厚度的实体路基，坚实立于地台之上，零 Z-fighting) */}
+      <mesh position={[0, cs.ROAD_Y - 0.2, roadMid]} receiveShadow>
+        <boxGeometry args={[cs.ROAD_WIDTH, 0.4, length]} />
         <meshStandardMaterial color="#1f1e1c" roughness={0.92} metalness={0.02} />
       </mesh>
 
@@ -102,9 +104,9 @@ export function Roadway({
       {bands.map((band) => (
         <mesh
           key={band.key}
-          position={[bandX(band.sign) + band.sign * bandW, cs.ROAD_Y + 0.05, (band.z0 + band.z1) / 2]}
+          position={[bandX(band.sign) + band.sign * bandW, cs.ROAD_Y + 0.04, (band.z0 + band.z1) / 2]}
         >
-          <boxGeometry args={[bandW, layout.mode === 'schematic' ? 0.8 : 0.04, Math.max(0.2, Math.abs(band.z1 - band.z0) - 0.4)]} />
+          <boxGeometry args={[bandW, 0.08, Math.max(0.2, Math.abs(band.z1 - band.z0) - 0.4)]} />
           <meshStandardMaterial
             color={band.color}
             roughness={0.55}
