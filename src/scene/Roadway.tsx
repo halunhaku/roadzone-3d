@@ -66,32 +66,32 @@ export function Roadway({
     <group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]}>
         <planeGeometry args={[40000, 40000]} />
-        <meshStandardMaterial color="#a8be9e" roughness={1} metalness={0} />
+        <meshStandardMaterial color="#d2dfce" roughness={1} metalness={0} />
       </mesh>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, cs.ROAD_Y, roadMid]} receiveShadow>
         <planeGeometry args={[cs.ROAD_WIDTH, length]} />
-        <meshStandardMaterial color="#2f2d2b" roughness={0.96} metalness={0.04} />
+        <meshStandardMaterial color="#383633" roughness={0.98} metalness={0.03} />
       </mesh>
 
       <mesh position={[0, cs.ROAD_Y + 0.005, roadMid]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[cs.MEDIAN, length]} />
-        <meshStandardMaterial color="#7c876e" roughness={1} />
+        <meshStandardMaterial color="#88987b" roughness={1} />
       </mesh>
 
       <mesh position={[0, cs.BARRIER_H / 2, roadMid]} castShadow receiveShadow>
         <boxGeometry args={[cs.BARRIER_W, cs.BARRIER_H, length]} />
-        <meshStandardMaterial color="#dedbd2" roughness={0.65} metalness={0.15} />
+        <meshStandardMaterial color="#ece9df" roughness={0.5} metalness={0.12} />
       </mesh>
       <mesh position={[0, cs.BARRIER_H + cs.BARRIER_W * 0.08, roadMid]}>
         <boxGeometry args={[cs.BARRIER_W * 1.08, cs.BARRIER_W * 0.16, length]} />
-        <meshStandardMaterial color="#cfcbc2" roughness={0.6} metalness={0.12} />
+        <meshStandardMaterial color="#dedad0" roughness={0.5} metalness={0.1} />
       </mesh>
 
-      <LaneMarks geometry={upMarks.white} color="#ffffff" />
-      <LaneMarks geometry={upMarks.yellow} color="#f59e0b" />
-      <LaneMarks geometry={downMarks.white} color="#ffffff" />
-      <LaneMarks geometry={downMarks.yellow} color="#f59e0b" />
+      <LaneMarks geometry={upMarks.white} color="#fdfdfc" />
+      <LaneMarks geometry={upMarks.yellow} color="#f5a623" />
+      <LaneMarks geometry={downMarks.white} color="#fdfdfc" />
+      <LaneMarks geometry={downMarks.yellow} color="#f5a623" />
 
       {bands.map((band) => (
         <mesh

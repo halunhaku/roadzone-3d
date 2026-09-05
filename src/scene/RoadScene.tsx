@@ -105,12 +105,12 @@ function Lights({ length }: { length: number }) {
   const shadowSpanZ = Math.max(500, length * 0.75)
   return (
     <>
-      <hemisphereLight args={['#ffffff', '#b2c6a9', 1.25]} />
+      <hemisphereLight args={['#ffffff', '#d0ded0', 1.35]} />
       <directionalLight
         castShadow
-        position={[length * 0.25, 110, length * 0.15]}
-        intensity={1.65}
-        color="#fffaf0"
+        position={[length * 0.22, 120, length * 0.14]}
+        intensity={1.55}
+        color="#fffbf2"
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
         shadow-camera-near={1}
@@ -119,9 +119,9 @@ function Lights({ length }: { length: number }) {
         shadow-camera-right={shadowSpanX}
         shadow-camera-top={shadowSpanZ}
         shadow-camera-bottom={-shadowSpanZ}
-        shadow-bias={-0.00015}
+        shadow-bias={-0.00012}
       />
-      <ambientLight intensity={0.65} color="#fbf9f4" />
+      <ambientLight intensity={0.72} color="#fffef8" />
     </>
   )
 }
@@ -164,9 +164,9 @@ export function RoadScene({
   captureRef?: MutableRefObject<CaptureFn | null>
   cameraRef?: MutableRefObject<CameraApi | null>
 }) {
-  const fogFar = Math.max(3000, layout.totalLength * 4.8)
-  const fogNear = 1600
-  const bg = '#eae6dd'
+  const fogFar = Math.max(3000, layout.totalLength * 5)
+  const fogNear = 1800
+  const bg = '#f6f4ee'
 
   return (
     <Canvas

@@ -5,7 +5,7 @@ import { displaySpeed, pathX, pathYaw, trafficPaths, type TrafficPath } from '..
 import type { RoadLayout } from '../layout/buildLayout'
 import type { Params } from '../zone/types'
 
-const PALETTE = ['#e4ddd2', '#2a2c30', '#a35035', '#475569', '#d4af37', '#52796f', '#3b82f6', '#dc2626']
+const PALETTE = ['#fdfcf7', '#3d4450', '#c86446', '#64748b', '#e0a96d', '#6b8e7d', '#5b8bf7', '#d9534f', '#f7b05b']
 
 export type VehicleModelType = 'sedan' | 'suv' | 'truck'
 
