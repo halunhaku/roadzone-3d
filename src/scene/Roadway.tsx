@@ -81,17 +81,18 @@ export function Roadway({
         <boxGeometry args={[cs.ROAD_WIDTH, 0.4, length]} />
         <meshStandardMaterial color="#1f1e1c" roughness={0.92} metalness={0.02} />
       </mesh>
-
-      <mesh position={[0, cs.ROAD_Y + 0.005, roadMid]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[cs.MEDIAN, length]} />
-        <meshStandardMaterial color="#88987b" roughness={1} />
+      {/* 实体中央分隔带绿化岛 (带 0.16 厚度的实体岛座，彻底根除 0.005 深度冲突与边缘闪烁) */}
+      <mesh position={[0, cs.ROAD_Y + 0.08, roadMid]} receiveShadow>
+        <boxGeometry args={[cs.MEDIAN, 0.16, length]} />
+        <meshStandardMaterial color="#738668" roughness={0.95} />
       </mesh>
 
-      <mesh position={[0, cs.BARRIER_H / 2, roadMid]} castShadow receiveShadow>
+      {/* 护栏稳固立于中央绿化岛之上 */}
+      <mesh position={[0, cs.ROAD_Y + 0.16 + cs.BARRIER_H / 2, roadMid]} castShadow receiveShadow>
         <boxGeometry args={[cs.BARRIER_W, cs.BARRIER_H, length]} />
         <meshStandardMaterial color="#ece9df" roughness={0.5} metalness={0.12} />
       </mesh>
-      <mesh position={[0, cs.BARRIER_H + cs.BARRIER_W * 0.08, roadMid]}>
+      <mesh position={[0, cs.ROAD_Y + 0.16 + cs.BARRIER_H + cs.BARRIER_W * 0.08, roadMid]}>
         <boxGeometry args={[cs.BARRIER_W * 1.08, cs.BARRIER_W * 0.16, length]} />
         <meshStandardMaterial color="#dedad0" roughness={0.5} metalness={0.1} />
       </mesh>
