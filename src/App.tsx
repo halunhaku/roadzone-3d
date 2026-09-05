@@ -7,16 +7,17 @@ import { exportPlanA4, overlayUiOnScene, pngFilename, saveBlob } from './ui/expo
 import { Hud } from './ui/Hud'
 import { ParamPanel } from './ui/ParamPanel'
 import { ViewBar, type ExportKind } from './ui/ViewBar'
-import { defaults, stake } from './zone/calc'
+import { loadFold, loadParams, saveFold, saveParams } from './persist'
+import { stake } from './zone/calc'
 import type { Params } from './zone/types'
 
 export default function App() {
-  const [params, setParams] = useState<Params>(defaults)
+  const [params, setParams] = useState<Params>(loadParams)
   const [selected, setSelected] = useState<SignSpot | null>(null)
   const [exporting, setExporting] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
-  const [sidebarFolded, setSidebarFolded] = useState(false)
-  const [planFolded, setPlanFolded] = useState(false)
+  const [sidebarFolded, setSidebarFolded] = useState(() => loadFold('sidebar'))
+  const [planFolded, setPlanFolded] = useState(() => loadFold('plan'))
   const toastTimerRef = useRef<number | null>(null)
   const captureRef = useRef<CaptureFn | null>(null)
   const cameraRef = useRef<CameraApi | null>(null)
@@ -25,6 +26,9 @@ export default function App() {
   const exportingLock = useRef(false)
   const layout = useMemo(() => buildLayout(params, 'schematic'), [params])
   const devices = useMemo(() => buildDevices(layout, params), [layout, params])
+  useEffect(() => saveParams(params), [params])
+  useEffect(() => saveFold('sidebar', sidebarFolded), [sidebarFolded])
+  useEffect(() => saveFold('plan', planFolded), [planFolded])
 
   function showToast(msg: string, duration = 3000) {
     if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current)
