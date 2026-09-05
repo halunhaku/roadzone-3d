@@ -66,6 +66,19 @@ export function ViewBar({
           <span>复位</span>
         </button>
       </div>
+      <button
+        type="button"
+        className="plan-btn"
+        disabled={exporting}
+        title="导出 A4 规范布置图（双侧占路自动含上/下行两张）"
+        onClick={() => onExport('plan')}
+      >
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M8 2.5v7.5M4.5 7L8 10.5 11.5 7" />
+          <path d="M2.5 11.5v1.5a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1.5" />
+        </svg>
+        <span>导出布置图</span>
+      </button>
       <div className="export-wrap" ref={menuRef}>
         <button
           type="button"
@@ -73,13 +86,14 @@ export function ViewBar({
           aria-haspopup="menu"
           aria-expanded={menuOpen}
           disabled={exporting}
+          title="截取当前画面"
           onClick={() => setMenuOpen((open) => !open)}
         >
           <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M8 2.5v7.5M4.5 7L8 10.5 11.5 7" />
-            <path d="M2.5 11.5v1.5a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-1.5" />
+            <path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h1.6l1-1.5h4L11.1 4h1.4A1.5 1.5 0 0 1 14 5.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5v-6z" />
+            <circle cx="8" cy="8.5" r="2.4" />
           </svg>
-          <span>{exporting ? '导出中…' : '导出图片'}</span>
+          <span>截图</span>
         </button>
         {menuOpen ? (
           <div className="export-menu" role="menu">
@@ -102,16 +116,6 @@ export function ViewBar({
               }}
             >
               含面板和图例
-            </button>
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => {
-                setMenuOpen(false)
-                onExport('plan')
-              }}
-            >
-              布置图（俯视）
             </button>
           </div>
         ) : null}

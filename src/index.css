@@ -27,6 +27,7 @@
 
 /* Emil Kowalski: Tactile feedback on press */
 .cam-pad button,
+.viewbar .plan-btn,
 .viewbar .export-btn,
 .fold-tab,
 .fold,
@@ -38,6 +39,7 @@
 }
 
 .cam-pad button:active,
+.viewbar .plan-btn:active,
 .viewbar .export-btn:active,
 .fold-tab:active,
 .fold:active,
@@ -569,7 +571,8 @@ body,
   background: var(--panel);
   border: 1px solid var(--panel-edge);
   backdrop-filter: blur(16px);
-  max-width: min(820px, calc(100vw - 400px));
+  width: max-content;
+  max-width: calc(100% - 24px);
 }
 
 .cam-pad {
@@ -581,8 +584,6 @@ body,
   padding: 0 10px;
   border: 1px solid var(--panel-edge);
   border-radius: 10px;
-  background: transparent;
-  color: var(--ink);
   font-family: var(--sans);
   font-size: 13px;
   cursor: pointer;
@@ -601,6 +602,34 @@ body,
 .cam-pad button:focus {
   outline: none;
 }
+.viewbar .plan-btn {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 6px 16px rgba(197, 106, 56, 0.3);
+}
+
+.viewbar .plan-btn:hover:not(:disabled) {
+  background: #b45f30;
+  box-shadow: 0 8px 20px rgba(197, 106, 56, 0.38);
+}
+
+.viewbar .plan-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
 .viewbar .export-btn {
   height: 36px;
   padding: 0 12px;
@@ -872,6 +901,7 @@ body,
     right: 10px;
     transform: none;
     max-width: none;
+    width: auto;
     padding: 6px;
     gap: 6px;
     justify-content: space-between;
@@ -906,6 +936,12 @@ body,
   }
 
   .viewbar .export-btn {
+    height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .viewbar .plan-btn {
     height: 34px;
     padding: 0 10px;
     font-size: 12px;
