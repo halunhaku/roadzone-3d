@@ -81,27 +81,29 @@ export default function App() {
 
   return (
     <div className="app" ref={appRef}>
-      <RoadScene
-        layout={layout}
-        params={params}
-        devices={devices}
-        selectedId={selected?.id ?? null}
-        onSelectSign={setSelected}
-        onMiss={() => setSelected(null)}
-        captureRef={captureRef}
-        cameraRef={cameraRef}
-      />
-      <ParamPanel params={params} onChange={setParams} layout={layout} />
-      <ViewBar
-        onExport={exportPng}
-        exporting={exporting}
-        onRotate={(d) => cameraRef.current?.rotate(d)}
-        onZoom={(f) => cameraRef.current?.zoom(f)}
-        onReset={() => cameraRef.current?.reset()}
-      />
-      <Hud layout={layout} selected={selected} onClear={() => setSelected(null)} />
+      <div className="stage-frame">
+        <RoadScene
+          layout={layout}
+          params={params}
+          devices={devices}
+          selectedId={selected?.id ?? null}
+          onSelectSign={setSelected}
+          onMiss={() => setSelected(null)}
+          captureRef={captureRef}
+          cameraRef={cameraRef}
+        />
+        <ParamPanel params={params} onChange={setParams} layout={layout} />
+        <ViewBar
+          onExport={exportPng}
+          exporting={exporting}
+          onRotate={(d) => cameraRef.current?.rotate(d)}
+          onZoom={(f) => cameraRef.current?.zoom(f)}
+          onReset={() => cameraRef.current?.reset()}
+        />
+        <Hud layout={layout} selected={selected} onClear={() => setSelected(null)} />
+        {toast ? <div className="toast" role="status" aria-live="polite">{toast}</div> : null}
+      </div>
       <PlanHost params={params} layout={layout} hostRef={planRef} />
-      {toast ? <div className="toast" role="status" aria-live="polite">{toast}</div> : null}
     </div>
   )
 }

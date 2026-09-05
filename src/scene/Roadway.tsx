@@ -64,11 +64,17 @@ export function Roadway({
 
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]}>
-        <planeGeometry args={[40000, 40000]} />
-        <meshStandardMaterial color="#d2dfce" roughness={1} metalness={0} />
-      </mesh>
-
+      {/* 3D 微缩沙盘立体地台 (带厚度与立体边框的紧凑台座) */}
+      <group position={[0, cs.ROAD_Y - 1.2, roadMid]}>
+        <mesh position={[0, 1.18, 0]}>
+          <boxGeometry args={[cs.ROAD_WIDTH + 36, 2.36, length + 48]} />
+          <meshStandardMaterial color="#d2dfce" roughness={1} metalness={0} />
+        </mesh>
+        <mesh position={[0, -0.05, 0]} castShadow receiveShadow>
+          <boxGeometry args={[cs.ROAD_WIDTH + 38, 0.22, length + 50]} />
+          <meshStandardMaterial color="#cfcbbe" roughness={0.7} metalness={0.12} />
+        </mesh>
+      </group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, cs.ROAD_Y, roadMid]} receiveShadow>
         <planeGeometry args={[cs.ROAD_WIDTH, length]} />
         <meshStandardMaterial color="#383633" roughness={0.98} metalness={0.03} />
