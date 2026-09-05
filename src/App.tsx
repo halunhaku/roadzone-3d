@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { buildLayout } from './layout/buildLayout'
 import { buildDevices, type SignSpot } from './layout/devices'
 import { RoadScene, type CameraApi, type CaptureFn } from './scene/RoadScene'
-import { PlanHost } from './diagram/PlanHost'
+import { PlanPanel } from './ui/PlanPanel'
 import { exportPlanA4, overlayUiOnScene, pngFilename, saveBlob } from './ui/exportPng'
 import { Hud } from './ui/Hud'
 import { ParamPanel } from './ui/ParamPanel'
@@ -16,6 +16,7 @@ export default function App() {
   const [exporting, setExporting] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const [sidebarFolded, setSidebarFolded] = useState(false)
+  const [planFolded, setPlanFolded] = useState(false)
   const toastTimerRef = useRef<number | null>(null)
   const captureRef = useRef<CaptureFn | null>(null)
   const cameraRef = useRef<CameraApi | null>(null)
@@ -115,7 +116,13 @@ export default function App() {
         <Hud layout={layout} selected={selected} onClear={() => setSelected(null)} />
         {toast ? <div className="toast" role="status" aria-live="polite">{toast}</div> : null}
       </main>
-      <PlanHost params={params} layout={layout} hostRef={planRef} />
+      <PlanPanel
+        params={params}
+        layout={layout}
+        folded={planFolded}
+        onToggleFold={() => setPlanFolded((f) => !f)}
+        hostRef={planRef}
+      />
     </div>
   )
 }
