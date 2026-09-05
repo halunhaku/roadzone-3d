@@ -91,12 +91,12 @@ function SignPost({
       ? 2.8
       : 0.22
     : schematic
-      ? 34
+      ? 28
       : spot.onRoad
         ? 1.15
         : 1.85
   const boardY = board ? y + h / 2 + (schematic ? 0.45 : 0.08) : y + postH + h / 2 - 0.08
-  const postR = schematic ? (board ? 0.35 : 0.8) : 0.04
+  const postR = schematic ? (board ? 0.35 : 0.7) : 0.04
 
   return (
     <group position={[spot.x, 0, spot.z]} rotation={[0, spot.yaw, 0]}>
@@ -104,19 +104,24 @@ function SignPost({
         <>
           <mesh position={[-w * 0.35, y + postH / 2, 0]} castShadow>
             <cylinderGeometry args={[postR, postR * 1.1, postH, 8]} />
-            <meshStandardMaterial color="#2c2c2e" roughness={0.55} metalness={0.25} />
+            <meshStandardMaterial color="#8c8275" roughness={0.45} metalness={0.3} />
           </mesh>
           <mesh position={[w * 0.35, y + postH / 2, 0]} castShadow>
             <cylinderGeometry args={[postR, postR * 1.1, postH, 8]} />
-            <meshStandardMaterial color="#2c2c2e" roughness={0.55} metalness={0.25} />
+            <meshStandardMaterial color="#8c8275" roughness={0.45} metalness={0.3} />
           </mesh>
         </>
       ) : (
         <mesh position={[0, y + postH / 2, 0]} castShadow>
-          <cylinderGeometry args={[postR, schematic ? 1.1 : 0.05, postH, 8]} />
-          <meshStandardMaterial color="#2c2c2e" roughness={0.55} metalness={0.25} />
+          <cylinderGeometry args={[postR, schematic ? 0.95 : 0.05, postH, 8]} />
+          <meshStandardMaterial color="#8c8275" roughness={0.45} metalness={0.3} />
         </mesh>
       )}
+      {/* 标牌实体背板 (位于牌面后方，提供真实厚度与背板质感) */}
+      <mesh position={[0, boardY, -(schematic ? 0.14 : 0.02)]} castShadow>
+        <boxGeometry args={[w * 0.99, h * 0.99, schematic ? 0.22 : 0.025]} />
+        <meshStandardMaterial color="#d4d0c7" roughness={0.55} metalness={0.15} />
+      </mesh>
       <mesh
         position={[0, boardY, 0.06]}
         castShadow
