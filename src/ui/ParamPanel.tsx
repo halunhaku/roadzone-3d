@@ -141,14 +141,6 @@ export function ParamPanel({
             </div>
           </fieldset>
         ) : null}
-        <div className="closure-badge">
-          {params.workSide === 'roadside'
-            ? '封闭外侧车道与应急车道（内侧车道正常通行）'
-            : params.doubleSide
-              ? '上下行均封闭中分带内侧超车道（外侧车道正常通行）'
-              : '仅封闭施工侧内侧超车道（外侧车道正常通行）'}
-        </div>
-
         <div className="row">
           <label className="field">
             <span>过渡区（m）</span>
@@ -178,7 +170,6 @@ export function ParamPanel({
 
         <details className="advanced">
           <summary>高级参数</summary>
-          <p className="hint">警告区固定 1,600 m。锥桶按 70 cm 实尺、设定间距摆放（示意比例下作业区被压短，看起来会更密）。</p>
           <div className="row">
             <label className="field">
               <span>下游过渡区（m）</span>
