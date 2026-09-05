@@ -30,7 +30,6 @@
 .viewbar .export-btn,
 .fold-tab,
 .fold,
-.preset-chip,
 .seg button,
 .btn-reset,
 .export-menu button,
@@ -42,7 +41,6 @@
 .viewbar .export-btn:active,
 .fold-tab:active,
 .fold:active,
-.preset-chip:active,
 .seg button:active,
 .btn-reset:active,
 .export-menu button:active,
@@ -358,42 +356,6 @@ body,
   font-weight: 600;
 }
 
-
-.preset-row {
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 214, 170, 0.1);
-}
-
-.preset-label {
-  margin: 0 0 6px;
-  font-size: 11px;
-  color: var(--muted);
-}
-
-.preset-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.preset-chip {
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 214, 170, 0.16);
-  background: rgba(255, 248, 238, 0.05);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.preset-chip:hover {
-  background: rgba(232, 93, 4, 0.16);
-  border-color: var(--accent);
-  color: var(--accent-2);
-}
 
 .closure-badge {
   margin: 4px 0 10px;

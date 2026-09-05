@@ -3,33 +3,6 @@ import { defaults, stake, validate } from '../zone/calc'
 import type { Params } from '../zone/types'
 import type { RoadLayout } from '../layout/buildLayout'
 
-const PRESETS: Array<{
-  label: string
-  desc: string
-  patch: Partial<Params>
-}> = [
-  {
-    label: '路侧养护 (常规)',
-    desc: '外侧行车道封闭 1000m',
-    patch: { workSide: 'roadside', doubleSide: false, work: 1000, speed: 100, taper: 200, buffer: 150 },
-  },
-  {
-    label: '中分带单侧',
-    desc: '内侧超车道封闭 500m',
-    patch: { workSide: 'median', doubleSide: false, work: 500, speed: 100, taper: 200, buffer: 150 },
-  },
-  {
-    label: '中分带双向',
-    desc: '双向内侧封闭 800m',
-    patch: { workSide: 'median', doubleSide: true, work: 800, speed: 100, taper: 200, buffer: 150 },
-  },
-  {
-    label: '短距抢修',
-    desc: '应急抢修 200m / 80km/h',
-    patch: { workSide: 'roadside', doubleSide: false, work: 200, speed: 80, taper: 150, buffer: 100 },
-  },
-]
-
 export function ParamPanel({
   params,
   onChange,
@@ -91,23 +64,6 @@ export function ParamPanel({
             <p className="sub">3D 布置 · 锥桶 / 标志牌 / 路栏</p>
           </header>
       <div className="panel-body">
-        <div className="preset-row">
-          <p className="preset-label">常用工况快捷载入：</p>
-          <div className="preset-chips">
-            {PRESETS.map((p) => (
-              <button
-                key={p.label}
-                type="button"
-                className="preset-chip"
-                title={p.desc}
-                onClick={() => onChange({ ...params, ...p.patch })}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
         <label className="field">
           <span>作业区起点（桩号）</span>
           <input
