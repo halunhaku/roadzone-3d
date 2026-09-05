@@ -64,20 +64,20 @@ export function Roadway({
 
   return (
     <group>
-      {/* 3D 微缩沙盘立体地台 (带厚度与立体边框的紧凑台座) */}
-      <group position={[0, cs.ROAD_Y - 1.2, roadMid]}>
-        <mesh position={[0, 1.18, 0]}>
-          <boxGeometry args={[cs.ROAD_WIDTH + 36, 2.36, length + 48]} />
+      {/* 3D 微缩沙盘立体地台 (台座顶面精确位于路面下方 0.01，绝不遮挡沥青路面与标线) */}
+      <group position={[0, cs.ROAD_Y, roadMid]}>
+        <mesh position={[0, -1.01, 0]}>
+          <boxGeometry args={[cs.ROAD_WIDTH + 36, 2.0, length + 48]} />
           <meshStandardMaterial color="#d2dfce" roughness={1} metalness={0} />
         </mesh>
-        <mesh position={[0, -0.05, 0]} castShadow receiveShadow>
-          <boxGeometry args={[cs.ROAD_WIDTH + 38, 0.22, length + 50]} />
+        <mesh position={[0, -2.06, 0]} castShadow receiveShadow>
+          <boxGeometry args={[cs.ROAD_WIDTH + 38, 0.2, length + 50]} />
           <meshStandardMaterial color="#cfcbbe" roughness={0.7} metalness={0.12} />
         </mesh>
       </group>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, cs.ROAD_Y, roadMid]} receiveShadow>
         <planeGeometry args={[cs.ROAD_WIDTH, length]} />
-        <meshStandardMaterial color="#383633" roughness={0.98} metalness={0.03} />
+        <meshStandardMaterial color="#1f1e1c" roughness={0.92} metalness={0.02} />
       </mesh>
 
       <mesh position={[0, cs.ROAD_Y + 0.005, roadMid]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
@@ -157,16 +157,16 @@ function Chevron({ x, z, yaw, y, s }: { x: number; z: number; yaw: number; y: nu
   return (
     <group position={[x, y + 0.03 * s, z]} rotation={[0, yaw, 0]} scale={s}>
       <mesh>
-        <boxGeometry args={[0.28, 0.012, 3.2]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.25} emissive="#ffffff" emissiveIntensity={0.15} />
+        <boxGeometry args={[0.42, 0.025, 3.6]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.2} emissive="#ffffff" emissiveIntensity={0.4} />
       </mesh>
-      <mesh position={[0.42, 0, 0.95]} rotation={[0, 0.55, 0]}>
-        <boxGeometry args={[0.24, 0.012, 1.5]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.25} emissive="#ffffff" emissiveIntensity={0.15} />
+      <mesh position={[0.52, 0, 1.05]} rotation={[0, 0.55, 0]}>
+        <boxGeometry args={[0.34, 0.025, 1.7]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.2} emissive="#ffffff" emissiveIntensity={0.4} />
       </mesh>
-      <mesh position={[-0.42, 0, 0.95]} rotation={[0, -0.55, 0]}>
-        <boxGeometry args={[0.24, 0.012, 1.5]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.25} emissive="#ffffff" emissiveIntensity={0.15} />
+      <mesh position={[-0.52, 0, 1.05]} rotation={[0, -0.55, 0]}>
+        <boxGeometry args={[0.34, 0.025, 1.7]} />
+        <meshStandardMaterial color="#ffffff" roughness={0.2} emissive="#ffffff" emissiveIntensity={0.4} />
       </mesh>
     </group>
   )

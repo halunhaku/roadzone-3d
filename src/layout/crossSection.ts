@@ -76,7 +76,7 @@ function make(kind: 'diagram' | 'real', lane: number, shOut: number, shIn: numbe
 export const DIAGRAM_CS = make('diagram', 48, 30, 10, 26, {
   BARRIER_W: 6,
   BARRIER_H: 14,
-  MARK_W: 1.8,
+  MARK_W: 2.8,
   ROAD_Y: 0.35,
 })
 

@@ -105,11 +105,11 @@ function Lights({ length }: { length: number }) {
   const shadowSpanZ = Math.max(500, length * 0.75)
   return (
     <>
-      <hemisphereLight args={['#ffffff', '#d0ded0', 1.35]} />
+      <hemisphereLight args={['#ffffff', '#82957b', 0.92]} />
       <directionalLight
         castShadow
-        position={[length * 0.22, 120, length * 0.14]}
-        intensity={1.55}
+        position={[length * 0.24, 115, length * 0.15]}
+        intensity={1.85}
         color="#fffbf2"
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -121,7 +121,7 @@ function Lights({ length }: { length: number }) {
         shadow-camera-bottom={-shadowSpanZ}
         shadow-bias={-0.00012}
       />
-      <ambientLight intensity={0.72} color="#fffef8" />
+      <ambientLight intensity={0.42} color="#fffcf5" />
     </>
   )
 }

@@ -57,10 +57,10 @@ export function LaneMarks({
       <meshStandardMaterial
         ref={mat}
         color={color}
-        roughness={0.35}
+        roughness={0.25}
         metalness={0.02}
         emissive={color}
-        emissiveIntensity={0.04}
+        emissiveIntensity={0.35}
       />
     </mesh>
   )
