@@ -61,6 +61,9 @@ export function LaneMarks({
         metalness={0.02}
         emissive={color}
         emissiveIntensity={0.35}
+        polygonOffset
+        polygonOffsetFactor={-4}
+        polygonOffsetUnits={-4}
       />
     </mesh>
   )

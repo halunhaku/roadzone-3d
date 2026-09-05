@@ -105,14 +105,17 @@ export function Roadway({
       {bands.map((band) => (
         <mesh
           key={band.key}
-          position={[bandX(band.sign) + band.sign * bandW, cs.ROAD_Y + 0.04, (band.z0 + band.z1) / 2]}
+          position={[bandX(band.sign) + band.sign * bandW, cs.ROAD_Y + 0.05, (band.z0 + band.z1) / 2]}
         >
           <boxGeometry args={[bandW, 0.08, Math.max(0.2, Math.abs(band.z1 - band.z0) - 0.4)]} />
           <meshStandardMaterial
             color={band.color}
             roughness={0.55}
             emissive={band.color}
-            emissiveIntensity={0.06}
+            emissiveIntensity={0.08}
+            polygonOffset
+            polygonOffsetFactor={-3}
+            polygonOffsetUnits={-3}
           />
         </mesh>
       ))}

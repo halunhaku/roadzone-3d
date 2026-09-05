@@ -173,7 +173,7 @@ export function RoadScene({
     <Canvas
       shadows
       dpr={[1, 2]}
-      gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
+      gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true, logarithmicDepthBuffer: true }}
       camera={{ fov: 32, near: 8, far: 4000, position: [130, 105, 170] }}
       onPointerMissed={onMiss}
       onCreated={({ gl }) => {
