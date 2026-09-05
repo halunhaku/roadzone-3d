@@ -857,7 +857,9 @@ body,
 }
 
 .plan-panel.panel-folded {
+  width: 64px;
   padding: 14px 0 18px;
+  align-items: center;
 }
 
 .plan-body {
