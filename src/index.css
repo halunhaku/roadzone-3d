@@ -96,18 +96,9 @@ body,
   transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1), padding 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* 折叠收起时，左侧化为轻巧悬浮胶囊 */
+/* 折叠收起时，左侧化为优雅的窄轨立柱（保持卡片质感，居于文档流内平滑过渡） */
 .app-workbench.sidebar-collapsed .panel-sidebar {
-  width: 0;
-  padding: 0;
-  border: none;
-  box-shadow: none;
-  background: transparent;
-  overflow: visible;
-  position: absolute;
-  top: 28px;
-  left: 28px;
-  z-index: 35;
+  width: 64px;
 }
 
 /* 右侧独立 3D 展台视口卡片 */
@@ -157,17 +148,14 @@ body,
 }
 
 .panel-folded {
-  width: auto;
-  min-width: 0;
-  max-width: none;
-  padding: 0;
-  border: none;
-  border-radius: 12px;
-  background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  overflow: visible;
+  width: 64px;
+  padding: 14px 0 18px;
+  align-items: center;
+}
+
+.panel-folded .panel-brand,
+.panel-folded .panel-body {
+  display: none;
 }
 
 .fold-tab {
@@ -218,14 +206,35 @@ body,
   transform: translateX(2px);
 }
 
-.panel-brand {
-  flex-shrink: 0;
-  padding: 0 56px 14px 0;
-  margin-right: 12px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 214, 170, 0.1);
+/* 桌面端折叠窄轨内的竖排展开按钮 */
+.panel-folded .fold-tab {
+  flex: 1;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 18px 0 16px;
+  background: transparent;
+  border: none;
+  border-radius: 14px;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
+.panel-folded .fold-tab:hover {
+  background: rgba(232, 93, 4, 0.1);
+  border-color: transparent;
+  transform: none;
+  box-shadow: none;
+}
+
+.panel-folded .fold-tab .fold-tab-title {
+  writing-mode: vertical-rl;
+  letter-spacing: 0.32em;
+  font-size: 13px;
+}
 .eyebrow {
   margin: 0;
   font-family: var(--display);
@@ -978,10 +987,20 @@ body,
   }
 
   .panel-folded .fold-tab {
+    flex-direction: row;
     height: 40px;
+    width: auto;
     padding: 0 16px;
+    gap: 8px;
     border-radius: 20px;
+    background: var(--panel);
+    border: 1px solid var(--panel-edge);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  .panel-folded .fold-tab .fold-tab-title {
+    writing-mode: horizontal-tb;
+    letter-spacing: 0.08em;
   }
 
   .field input,
