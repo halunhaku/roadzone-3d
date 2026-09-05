@@ -61,8 +61,8 @@ export function trafficPaths(layout: RoadLayout, params: Params): TrafficPath[] 
     if (dir < 0) {
       mergeStart = 2 * cz - primaryStart
       mergeEnd = 2 * cz - primaryEnd
-      returnStart = 2 * cz - primaryReturnEnd
-      returnEnd = 2 * cz - primaryReturnStart
+      returnStart = 2 * cz - primaryReturnStart
+      returnEnd = 2 * cz - primaryReturnEnd
     }
     paths.push({
       xClosed: closedX,
