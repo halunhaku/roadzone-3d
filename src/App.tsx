@@ -15,6 +15,7 @@ export default function App() {
   const [selected, setSelected] = useState<SignSpot | null>(null)
   const [exporting, setExporting] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+  const [sidebarFolded, setSidebarFolded] = useState(false)
   const toastTimerRef = useRef<number | null>(null)
   const captureRef = useRef<CaptureFn | null>(null)
   const cameraRef = useRef<CameraApi | null>(null)
@@ -80,8 +81,15 @@ export default function App() {
   }
 
   return (
-    <div className="app" ref={appRef}>
-      <div className="stage-frame">
+    <div className={`app-workbench ${sidebarFolded ? 'sidebar-collapsed' : ''}`} ref={appRef}>
+      <ParamPanel
+        params={params}
+        onChange={setParams}
+        layout={layout}
+        folded={sidebarFolded}
+        onToggleFold={() => setSidebarFolded((f) => !f)}
+      />
+      <main className="stage-card">
         <RoadScene
           layout={layout}
           params={params}
@@ -92,7 +100,6 @@ export default function App() {
           captureRef={captureRef}
           cameraRef={cameraRef}
         />
-        <ParamPanel params={params} onChange={setParams} layout={layout} />
         <ViewBar
           onExport={exportPng}
           exporting={exporting}
@@ -102,7 +109,7 @@ export default function App() {
         />
         <Hud layout={layout} selected={selected} onClear={() => setSelected(null)} />
         {toast ? <div className="toast" role="status" aria-live="polite">{toast}</div> : null}
-      </div>
+      </main>
       <PlanHost params={params} layout={layout} hostRef={planRef} />
     </div>
   )

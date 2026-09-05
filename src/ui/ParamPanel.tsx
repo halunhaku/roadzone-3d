@@ -7,12 +7,18 @@ export function ParamPanel({
   params,
   onChange,
   layout,
+  folded: externalFolded,
+  onToggleFold,
 }: {
   params: Params
   onChange: (next: Params) => void
   layout: RoadLayout
+  folded?: boolean
+  onToggleFold?: () => void
 }) {
-  const [folded, setFolded] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 720)
+  const [internalFolded, setInternalFolded] = useState(() => typeof window !== 'undefined' && window.innerWidth <= 768)
+  const isFolded = externalFolded !== undefined ? externalFolded : internalFolded
+  const toggleFold = onToggleFold || (() => setInternalFolded((f) => !f))
   const errors = validate(params)
   const startM = params.start
   const endStake =
@@ -24,16 +30,16 @@ export function ParamPanel({
 
   return (
     <aside
-      className={folded ? 'panel panel-folded' : 'panel'}
+      className={isFolded ? 'panel-sidebar panel panel-folded' : 'panel-sidebar panel'}
       onWheel={(e) => e.stopPropagation()}
     >
-      {folded ? (
+      {isFolded ? (
         <button
           type="button"
           className="fold-tab"
           aria-expanded={false}
           aria-label="展开参数面板"
-          onClick={() => setFolded(false)}
+          onClick={toggleFold}
         >
           <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <circle cx="8" cy="8" r="2.5" />
@@ -50,8 +56,8 @@ export function ParamPanel({
             type="button"
             className="fold"
             aria-expanded={true}
-            aria-label="收起参数面板"
-            onClick={() => setFolded(true)}
+            aria-label="收起参数侧栏"
+            onClick={toggleFold}
           >
             <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M10 3.5L5.5 8l4.5 4.5" />

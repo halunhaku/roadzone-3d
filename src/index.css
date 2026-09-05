@@ -64,68 +64,71 @@ body,
   font-family: var(--sans);
 }
 
-.app {
+.app-workbench {
   position: relative;
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px;
-  background: #e8e5dc;
+  align-items: stretch;
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #eae7df;
   overflow: hidden;
 }
 
-.stage-frame {
-  position: relative;
-  width: 100%;
+/* 左侧独立参数控制台卡片 */
+.panel-sidebar {
+  width: 370px;
+  flex-shrink: 0;
   height: 100%;
-  max-width: 1560px;
-  max-height: 940px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  box-shadow: 0 20px 60px rgba(45, 38, 30, 0.12), 0 2px 8px rgba(45, 38, 30, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 18px 6px 16px 18px;
+  overflow: hidden;
+  position: relative;
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1), padding 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* 折叠收起时，左侧化为轻巧悬浮胶囊 */
+.app-workbench.sidebar-collapsed .panel-sidebar {
+  width: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  overflow: visible;
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 35;
+}
+
+/* 右侧独立 3D 展台视口卡片 */
+.stage-card {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  position: relative;
   border-radius: 24px;
   overflow: hidden;
   background: #f6f4ee;
   border: 1px solid rgba(160, 150, 138, 0.35);
   box-shadow: 0 20px 60px rgba(45, 38, 30, 0.12), 0 2px 8px rgba(45, 38, 30, 0.05);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.app.capture-flat .panel,
-.app.capture-flat .panel-folded,
-.app.capture-flat .viewbar,
-.app.capture-flat .legend,
-.app.capture-flat .sign-card,
-.app.capture-flat .hint-bar {
-  background: rgba(28, 26, 23, 0.92);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-
-.app canvas,
-.stage-frame canvas {
+.stage-card canvas {
   display: block;
   width: 100%;
   height: 100%;
   touch-action: none;
-}
-
-.panel {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  width: min(360px, calc(100vw - 28px));
-  max-height: calc(100vh - 36px);
-  max-height: calc(100dvh - 36px);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 20;
-  padding: 18px 6px 16px 18px;
-  border-radius: 18px;
-  background: var(--panel);
-  border: 1px solid var(--panel-edge);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 .fold {
   position: absolute;
@@ -884,12 +887,12 @@ body,
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .app {
+  .app-workbench {
     padding: 0;
+    flex-direction: column;
+    gap: 0;
   }
-  .stage-frame {
-    max-width: none;
-    max-height: none;
+  .stage-card {
     border-radius: 0;
     border: none;
     box-shadow: none;
@@ -933,7 +936,8 @@ body,
     box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
   }
 
-  .panel {
+  .panel-sidebar {
+    position: absolute;
     top: auto;
     bottom: 0;
     left: 0;
@@ -945,6 +949,15 @@ body,
     padding: 16px 8px max(16px, env(safe-area-inset-bottom, 16px)) 16px;
     box-shadow: 0 -8px 36px rgba(0, 0, 0, 0.45);
     z-index: 30;
+  }
+
+  .app-workbench.sidebar-collapsed .panel-sidebar {
+    top: auto;
+    bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    left: 12px;
+    right: auto;
+    width: auto;
+    padding: 0;
   }
 
   .panel-body::-webkit-scrollbar-track {
