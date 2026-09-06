@@ -94,6 +94,9 @@ export function ViewBar({
             <circle cx="8" cy="8.5" r="2.4" />
           </svg>
           <span>截图</span>
+          <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6, marginLeft: -2 }} aria-hidden>
+            <path d="M4 6.5l4 4 4-4" />
+          </svg>
         </button>
         {menuOpen ? (
           <div className="export-menu" role="menu">
@@ -105,7 +108,12 @@ export function ViewBar({
                 onExport('scene')
               }}
             >
-              仅 3D 画面
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6, flexShrink: 0 }} aria-hidden>
+                <rect x="2" y="2.5" width="12" height="11" rx="2" />
+                <circle cx="5.5" cy="6" r="1" />
+                <path d="M14 11l-3.5-3.5-5 5" />
+              </svg>
+              <span>仅 3D 画面</span>
             </button>
             <button
               type="button"
@@ -115,7 +123,11 @@ export function ViewBar({
                 onExport('ui')
               }}
             >
-              含面板和图例
+              <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6, flexShrink: 0 }} aria-hidden>
+                <rect x="2" y="2" width="12" height="12" rx="2" />
+                <path d="M2 6h12M6 6v8" />
+              </svg>
+              <span>含面板和图例</span>
             </button>
           </div>
         ) : null}

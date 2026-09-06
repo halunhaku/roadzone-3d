@@ -39,12 +39,15 @@ export function ParamPanel({
           className="fold-tab"
           aria-expanded={false}
           aria-label="展开参数面板"
+          title="展开参数面板"
           onClick={toggleFold}
         >
-          <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <circle cx="8" cy="8" r="2.5" />
-            <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4" />
-          </svg>
+          <div className="fold-tab-icon">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <rect x="2" y="2.5" width="12" height="11" rx="2" />
+              <path d="M6 2.5v11" />
+            </svg>
+          </div>
           <span className="fold-tab-title">作业参数</span>
           <svg className="fold-tab-arrow" viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M6 3.5l4.5 4.5L6 12.5" />
@@ -52,22 +55,32 @@ export function ParamPanel({
         </button>
       ) : (
         <>
-          <button
-            type="button"
-            className="fold"
-            aria-expanded={true}
-            aria-label="收起参数侧栏"
-            onClick={toggleFold}
-          >
-            <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M10 3.5L5.5 8l4.5 4.5" />
-            </svg>
-            <span>收起</span>
-          </button>
+          <div className="panel-header">
+            <div className="eyebrow-badge">
+              <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <circle cx="8" cy="8" r="4.5" />
+                <path d="M8 5.5v2.5l1.5 1.5" />
+              </svg>
+              <span>JTG H30 · 3D 规程</span>
+            </div>
+            <button
+              type="button"
+              className="fold-btn"
+              aria-expanded={true}
+              title="收起参数侧栏"
+              aria-label="收起参数侧栏"
+              onClick={toggleFold}
+            >
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <rect x="2" y="2.5" width="12" height="11" rx="2" />
+                <path d="M6 2.5v11" />
+              </svg>
+              <span>收起</span>
+            </button>
+          </div>
           <header className="panel-brand">
-            <p className="eyebrow">JTG H30 · 3D 布置</p>
             <h1>路安作业区</h1>
-            <p className="sub">3D 布置 · 锥桶 / 标志牌 / 路栏</p>
+            <p className="sub">高精三维布置 · 锥桶 / 标牌 / 占道</p>
           </header>
       <div className="panel-body">
         <label className="field">

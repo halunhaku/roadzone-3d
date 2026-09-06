@@ -182,7 +182,7 @@ export function RoadScene({
 }) {
   const fogFar = Math.max(3000, layout.totalLength * 5)
   const fogNear = 1800
-  const bg = '#f6f4ee'
+  const bg = '#f0f2f5'
 
   return (
     <Canvas
